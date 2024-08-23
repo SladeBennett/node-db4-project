@@ -1,19 +1,19 @@
 exports.up = async function (knex) {
     await knex.schema
-        .createTable('recipes', tbl => {
-            tbl.increments('recipe_id')
-            tbl.string('recipe_name', 200).notNullable().unique()
+        .createTable('recipes', table => {
+            table.increments('recipe_id')
+            table.string('recipe_name', 200).notNullable().unique()
         })
-        .createTable('ingredients', tbl => {
-            tbl.increments('ingredient_id')
-            tbl.string('ingredient_name', 200).notNullable().unique()
-            tbl.string('ingredient_unit', 50)
+        .createTable('ingredients', table => {
+            table.increments('ingredient_id')
+            table.string('ingredient_name', 200).notNullable().unique()
+            table.string('ingredient_unit', 50)
         })
-        .createTable('steps', tbl => {
-            tbl.increments('step_id')
-            tbl.string('step_text', 200).notNullable()
-            tbl.integer('step_number').notNullable()
-            tbl.integer('recipe_id')
+        .createTable('steps', table => {
+            table.increments('step_id')
+            table.string('step_text', 200).notNullable()
+            table.integer('step_number').notNullable()
+            table.integer('recipe_id')
                 .unsigned()
                 .notNullable()
                 .references('recipe_id')
@@ -22,7 +22,22 @@ exports.up = async function (knex) {
                 .onUpdate('RESTRICT')
         })
         .createTable('steps_ingredients', table => {
-            table.increments('steps_ingredients-id')
+            table.increments('steps_ingredient-id')
+            table.float('quantity').notNullable()
+            table.integer('step_id')
+                .unsigned()
+                .notNullable()
+                .references('step_id')
+                .inTable('steps')
+                .onUpdate('RESTRICT')
+                .onDelete('RESTRICT')
+            table.integer('ingredient_id')
+                .unsigned()
+                .notNullable()
+                .references('ingredient_id')
+                .inTable('ingredients')
+                .onDelete('RESTRICT')
+                .onUpdate('RESTRICT')
         })
 
 }
