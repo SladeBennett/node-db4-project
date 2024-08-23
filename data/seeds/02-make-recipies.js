@@ -1,4 +1,4 @@
-const recipies = [
+const recipes = [
     { recipe_name: 'Broccoli Pesto Pasta' },
     { recipe_name: 'Lemon Chicken' },
     { recipe_name: 'Salmon en Papillote' },
@@ -13,7 +13,7 @@ const ingredients = [
     { ingredient_name: 'Salmon', ingredient_unit: 'grams' },
 ]
 
-const step_ingredients = [
+const steps_ingredients = [
     //Broccoli Pesto Pasta
     { step_id: 2, ingredient_id: 1, quantity: 1 },
     { step_id: 3, ingredient_id: 2, quantity: 1.5 },
@@ -44,5 +44,5 @@ exports.seed = async function (knex) {
     await knex('recipes').insert(recipes)
     await knex('ingredients').insert(ingredients)
     await knex('steps').insert(steps)
-    await knex('step_ingredients').insert(step_ingredients)
+    await knex('steps_ingredients').insert(steps_ingredients)
 }
